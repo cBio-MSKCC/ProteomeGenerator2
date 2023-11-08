@@ -1,4 +1,5 @@
 channels:
+ - bioconda/label/cf201901
  - bioconda
 
 dependencies:
