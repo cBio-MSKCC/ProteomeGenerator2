@@ -150,7 +150,7 @@ The usage of PG2 follows the general paradigm of Snakemake, in which the user sp
 >
 > **FOR BIC**
 >
-> **To create the first two 'default' output files**:
+> **To create the first two 'default' output files described below**:
 >    - `out/{study_group}/combined.proteome.unique.fasta`
 >    - `out/{study_group}/combined.proteome.bed`
 >
