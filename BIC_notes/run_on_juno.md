@@ -11,22 +11,27 @@ module load perl/perl-5.22.0  ## added 10/30/2023
 #conda deactivate
 ```
 
+Nick copied full paths from lilac to juno in:
+
+`/juno/res/mix/Cache/2023-09-14/2023_10_test_data`
+
+
 Copy original sample config file to project directory. Keep original for reference.
 ```plain
-cp /juno/res/mix/Cache/2023-09-14/2023_10_test_data/data/kentsis/ProteomeGenerator2/configfiles/2023-Oct-12-KasuminonDAC.yaml /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL 
+cp /juno/res/mix/Cache/2023-09-14/2023_10_test_data/data/kentsis/ProteomeGenerator2/configfiles/2023-Oct-12-KasuminonDAC.yaml \
+    /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL 
 ```
 
 Make another copy and modify the new one to point to the correct input files.
 ```plain
-cp /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
+cp /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL \
+    /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
 
-# Nick copied full paths from lilac to juno:
-#
-#   juno:/juno/res/mix/Cache/2023-09-14/2023_10_test_data
-#
-#   so in our config, all original paths are prepended with /juno/res/mix/Cache/2023-09-14/2023_10_test_data
+# Modify /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
+# NOTE: Since Nick copied full paths to data, in our config all original paths are prepended 
+# with /juno/res/mix/Cache/2023-09-14/2023_10_test_data
 ```
-**NOTE:** both original and modified configs are also in ProteomeGenerator2/BIC_config
+**NOTE:** both original and modified configs are also in [ProteomeGenerator2/BIC_config](../BIC_config)
 
 
 Make a project-specific copy of `run.sh` and modify it to point to your project directory, config file, cluster job submission command, target file and log file. 
@@ -48,7 +53,17 @@ CLUSTER="bsub -J {params.J} -n {params.n} -R 'span[hosts=1] rusage[mem={params.m
 
 For our test run, the final command was:
 ```plain
-ProteomeGenerator2> snakemake --snakefile ProteomeGenerator2.py --cluster "bsub -J {params.J} -n {params.n} -R 'span[hosts=1] rusage[mem={params.mem_per_cpu}]' -W 144:00 -o {params.o} -eo {params.eo}" -j 100 -k --ri --latency-wait 30 --configfile /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml  --use-conda --use-singularity --singularity-args "--bind /juno:/juno,/work:/work,/home:/home,/scratch:/scratch" out/experiment/novel_analysis/proteome_blast.outfmt6 > /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.snakemake.out 2>&1
+ProteomeGenerator2> snakemake --snakefile ProteomeGenerator2.py \
+   --cluster "bsub -J {params.J} -n {params.n} -R 'span[hosts=1] rusage[mem={params.mem_per_cpu}]' -W 144:00 -o {params.o} -eo {params.eo}" \
+   -j 100 \
+   -k --ri \
+   --latency-wait 30 \
+   --configfile /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml \
+   --use-conda \
+   --use-singularity \
+   --singularity-args "--bind /juno:/juno,/work:/work,/home:/home,/scratch:/scratch" \
+   out/experiment/novel_analysis/proteome_blast.outfmt6 \
+  > /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.snakemake.out 2>&1
 ```
 
 ## Run 
@@ -60,7 +75,7 @@ cd /juno/work/bic/byrne/ProteomeGenerator2
 nohup ./run.sh &
 ```
 
-### Changes made from original instructions
+## NOTES -- Changes made from original instructions
 - reordered channels in envs/crossmap.yaml
 - replaced channel 'bioconda' with 'bioconda/label/cf201901' in envs/transdecoder.yaml
 - load perl prior to running (`module load perl/perl-5.22.0`)
