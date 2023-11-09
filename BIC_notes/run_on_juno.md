@@ -2,19 +2,21 @@
 
 - Run on **terra**.
 
-```plain
-export PATH=/opt/common/bic/miniconda3/bin:$PATH
-source activate /home/wilson/.conda/envs/snakemakev5 ## Manda already set up snakemake env successfully
-module load singularity/3.7.1
-module load perl/perl-5.22.0  ## added 10/30/2023
+    ```plain
+    export PATH=/opt/common/bic/miniconda3/bin:$PATH
+    source activate /home/wilson/.conda/envs/snakemakev5 ## Manda already set up snakemake env successfully
+    module load singularity/3.7.1
+    module load perl/perl-5.22.0  ## added 10/30/2023
 
-#conda deactivate
-```
+    #conda deactivate
+    ```
 
 
 - Nick copied full paths from lilac to juno in:
 
-`/juno/res/mix/Cache/2023-09-14/2023_10_test_data`
+    ```
+    /juno/res/mix/Cache/2023-09-14/2023_10_test_data
+    ```
 
 
 - Copy original sample config file to project directory. Keep original for reference.
