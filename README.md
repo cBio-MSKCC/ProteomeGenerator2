@@ -105,13 +105,14 @@ The (suggested) snakemake command to run PG2 takes the following general form:
 --configfile configfiles/PG2_template.yaml --use-conda --use-singularity --singularity-args "--bind /data:/data,/lila:/lila,/scratch:/scratch" -n --quiet`
 
 ---
-
-**For BIC: to run on juno**
-The command above has been wrapped in [run.sh](run.sh). For each project, configure a copy of this script by uncommenting and modifying the variables to point to your config YAML, project directory, etc. See [BIC_notes/run_on_juno.md](BIC_notes/run_on_juno.md) for details. 
-Note: Any snakemake arguments can be added by appending them to the wrapper command. e.g., for a dry run:
-```
-./run.sh -n --quiet
-```
+> [!NOTE]
+> **For BIC: to run on juno**
+> The command above has been wrapped in [run.sh](run.sh). For each project, configure a copy of this script by uncommenting and modifying the variables to point to your config YAML, project directory, etc. See [BIC_notes/run_on_juno.md](BIC_notes/run_on_juno.md) for details. 
+> [!IMPORTANT] 
+> Any snakemake arguments can be added by appending them to the wrapper command. e.g., for a dry run:
+> ```
+> ./run.sh -n --quiet
+> ```
 ---
 
 It looks really complicated at first, but keep in mind that most of it doesn’t change from run to run, so you can pretty much copy & paste it for each run, with minor modifications. A brief rundown of the parameters:
@@ -141,7 +142,10 @@ For the full parameter specifications, please see the Snakemake official documen
 ## Output files
 The usage of PG2 follows the general paradigm of Snakemake, in which the user specifies, in the snakemake command, the final output file(s) they wish to produce. Snakemake then identifies the rule (every pipeline step is defined by a rule) that produces the target output file, and then works backwards to string together the set of rules (represented by a DAG) needed to generate the output files, until reaching the input files. 
 
-**For BIC: to create the first two 'default' output files below, (`out/{study_group}/combined.proteome.*`), specify the target file `out/experiment/novel_analysis/proteome_blast.outfmt6`**
+---
+> [!NOTE]
+> **For BIC: to create the first two 'default' output files below, (`out/{study_group}/combined.proteome.*`), specify the target file `out/experiment/novel_analysis/proteome_blast.outfmt6`**
+---
 
 **Default case**: If no particular output file(s) are specified, then Snakemake will default to the files specified in the “all” rule of the Snakefile in question (for PG2, the Snakefile will typically be ProteomeGenerator2.py). Here are the default output files specified in rule all: 
 -	`out/{study_group}/combined.proteome.unique.fasta` : the primary output proteome database. This is a non-redundant (unique) set of customized protein sequences, which is created by combining and de-duplicating the databases from the parallel haplotype runs (which themselves are located at out/{study_group}/haplotype-{1,2}/transcriptome/proteome.fasta). This combined database is what is used as the search database for the proteomics module.
