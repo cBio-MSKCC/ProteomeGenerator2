@@ -109,7 +109,7 @@ The (suggested) snakemake command to run PG2 takes the following general form:
 >
 > **\*For BIC: to run on juno\***
 >
-> The command above has been wrapped in [run.sh](run.sh). For each project, configure a copy of this script by uncommenting and modifying the variables to point to your config YAML, project directory, etc. See [BIC_notes/run_on_juno.md](BIC_notes/run_on_juno.md) for details. 
+> The command above has been wrapped in [run.sh](run.sh). For each project, configure a copy of this script by uncommenting and modifying the variables to point to your config YAML, project directory, etc. See [BIC notes](BIC_notes/run_on_juno.md) for details. 
 >
 > Any snakemake arguments can be added by appending them to the wrapper command. e.g., for a dry run:
 > ```
