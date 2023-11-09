@@ -105,8 +105,9 @@ The (suggested) snakemake command to run PG2 takes the following general form:
 --configfile configfiles/PG2_template.yaml --use-conda --use-singularity --singularity-args "--bind /data:/data,/lila:/lila,/scratch:/scratch" -n --quiet`
 
 ---
-> [!NOTE] **For BIC: to run on juno**
+> [!NOTE] 
 >
+> **For BIC: to run on juno**
 > The command above has been wrapped in [run.sh](run.sh). For each project, configure a copy of this script by uncommenting and modifying the variables to point to your config YAML, project directory, etc. See [BIC_notes/run_on_juno.md](BIC_notes/run_on_juno.md) for details. 
 
 > [!IMPORTANT] 
@@ -145,7 +146,9 @@ For the full parameter specifications, please see the Snakemake official documen
 The usage of PG2 follows the general paradigm of Snakemake, in which the user specifies, in the snakemake command, the final output file(s) they wish to produce. Snakemake then identifies the rule (every pipeline step is defined by a rule) that produces the target output file, and then works backwards to string together the set of rules (represented by a DAG) needed to generate the output files, until reaching the input files. 
 
 ---
-> [!NOTE] **FOR BIC**
+> [!NOTE] 
+>
+> **FOR BIC**
 >
 > **To create the first two 'default' output files**:
 >    - `out/{study_group}/combined.proteome.unique.fasta`
