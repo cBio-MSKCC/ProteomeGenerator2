@@ -75,6 +75,9 @@
 # move to repo directory if not already there
 cd /juno/work/bic/byrne/ProteomeGenerator2
 
+# dry-run
+./run_KasuminonDAC_test.sh -n --quiet
+
 # run in background as entire pipeline will take a few days
 nohup ./run_KasuminonDAC_test.sh &
 ```

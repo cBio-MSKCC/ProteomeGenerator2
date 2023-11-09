@@ -16,6 +16,7 @@ snakemake --snakefile ProteomeGenerator2.py \
   --use-conda \
   --use-singularity \
   --singularity-args "--bind /juno:/juno,/work:/work,/home:/home,/scratch:/scratch" \
+  "$@" \
   ${TARGET} \
   > ${LOG} 2>&1
 
