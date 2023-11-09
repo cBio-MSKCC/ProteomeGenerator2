@@ -11,8 +11,28 @@ module load perl/perl-5.22.0  ## added 10/30/2023
 #conda deactivate
 ```
 
-Make a copy of `run.sh` and modify your copy to point to your project directory, config file, cluster job submission command, target file and log file. 
+Copy original sample config file to project directory. Keep original for reference.
 ```plain
+cp /juno/res/mix/Cache/2023-09-14/2023_10_test_data/data/kentsis/ProteomeGenerator2/configfiles/2023-Oct-12-KasuminonDAC.yaml /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL 
+```
+
+Make another copy and modify the new one to point to the correct input files.
+```plain
+cp /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
+
+# Nick copied full paths from lilac to juno:
+#
+#   juno:/juno/res/mix/Cache/2023-09-14/2023_10_test_data
+#
+#   so in our config, all original paths are prepended with /juno/res/mix/Cache/2023-09-14/2023_10_test_data
+```
+**NOTE:** both original and modified configs are also in ProteomeGenerator2/BIC_config
+
+
+Make a project-specific copy of `run.sh` and modify it to point to your project directory, config file, cluster job submission command, target file and log file. 
+```plain
+cd /juno/work/bic/byrne/ProteomeGenerator2
+
 cp run.sh run_KasuminonDAC_test.sh
 
 #open and modify variables in run_KasuminonDAC_test.sh
@@ -33,6 +53,9 @@ ProteomeGenerator2> snakemake --snakefile ProteomeGenerator2.py --cluster "bsub 
 
 ## Run 
 ```plain
+# move to repo directory if not already there
+cd /juno/work/bic/byrne/ProteomeGenerator2
+
 # run in background as entire pipeline will take a few days
 nohup ./run.sh &
 ```
