@@ -12,10 +12,15 @@
     ```
 
 
-- Nick copied full paths from lilac to juno in:
+- Nick copied full paths to example input & output from lilac to juno in:
 
     ```
     /juno/res/mix/Cache/2023-09-14/2023_10_test_data
+    ```
+- Stock references and resources are copied (full paths) from lilac to juno in:
+
+    ```
+    /juno/depot/custom/PG2
     ```
 
 
@@ -31,8 +36,9 @@
         /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
 
     # Modify /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
-    # NOTE: Since Nick copied full paths to data, in our config all original paths are prepended 
-    # with /juno/res/mix/Cache/2023-09-14/2023_10_test_data
+    # NOTE: Since Nick copied full paths to data, in our config some original paths
+    # to stock references are prepended with /juno/depot/custom/PG2 and original paths
+    # to input (fastqs) are prepended with /juno/res/mix/Cache/2023-09-14/2023_10_test_data
     ```
     **NOTE:** both original and modified configs are also in [ProteomeGenerator2/BIC_config](../BIC_config)
 
