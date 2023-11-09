@@ -34,7 +34,7 @@
     # NOTE: Since Nick copied full paths to data, in our config all original paths are prepended 
     # with /juno/res/mix/Cache/2023-09-14/2023_10_test_data
     ```
-**NOTE:** both original and modified configs are also in [ProteomeGenerator2/BIC_config](../BIC_config)
+    **NOTE:** both original and modified configs are also in [ProteomeGenerator2/BIC_config](../BIC_config)
 
 
 - Make a project-specific copy of `run.sh` and modify it to point to your project directory, config file, cluster job submission command, target file and log file. 
