@@ -1,6 +1,6 @@
 ## Setup
 
-Run on **terra**.
+- Run on **terra**.
 
 ```plain
 export PATH=/opt/common/bic/miniconda3/bin:$PATH
@@ -11,18 +11,19 @@ module load perl/perl-5.22.0  ## added 10/30/2023
 #conda deactivate
 ```
 
-Nick copied full paths from lilac to juno in:
+
+- Nick copied full paths from lilac to juno in:
 
 `/juno/res/mix/Cache/2023-09-14/2023_10_test_data`
 
 
-Copy original sample config file to project directory. Keep original for reference.
+- Copy original sample config file to project directory. Keep original for reference.
 ```plain
 cp /juno/res/mix/Cache/2023-09-14/2023_10_test_data/data/kentsis/ProteomeGenerator2/configfiles/2023-Oct-12-KasuminonDAC.yaml \
     /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL 
 ```
 
-Make another copy and modify the new one to point to the correct input files.
+- Make another copy and modify the new one to point to the correct input files.
 ```plain
 cp /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGINAL \
     /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml
@@ -34,7 +35,7 @@ cp /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.yaml.ORIGI
 **NOTE:** both original and modified configs are also in [ProteomeGenerator2/BIC_config](../BIC_config)
 
 
-Make a project-specific copy of `run.sh` and modify it to point to your project directory, config file, cluster job submission command, target file and log file. 
+- Make a project-specific copy of `run.sh` and modify it to point to your project directory, config file, cluster job submission command, target file and log file. 
 ```plain
 cd /juno/work/bic/byrne/ProteomeGenerator2
 
@@ -51,7 +52,7 @@ CLUSTER="bsub -J {params.J} -n {params.n} -R 'span[hosts=1] rusage[mem={params.m
 ...
 ```
 
-For our test run, the final command was:
+- For our test run, the final command was:
 ```plain
 ProteomeGenerator2> snakemake --snakefile ProteomeGenerator2.py \
    --cluster "bsub -J {params.J} -n {params.n} -R 'span[hosts=1] rusage[mem={params.mem_per_cpu}]' -W 144:00 -o {params.o} -eo {params.eo}" \
@@ -65,6 +66,7 @@ ProteomeGenerator2> snakemake --snakefile ProteomeGenerator2.py \
    out/experiment/novel_analysis/proteome_blast.outfmt6 \
   > /juno/work/bic/byrne/pg2/20231023_new_cmd/2023-Oct-12-KasuminonDAC.snakemake.out 2>&1
 ```
+---
 
 ## Run 
 ```plain
@@ -72,8 +74,9 @@ ProteomeGenerator2> snakemake --snakefile ProteomeGenerator2.py \
 cd /juno/work/bic/byrne/ProteomeGenerator2
 
 # run in background as entire pipeline will take a few days
-nohup ./run.sh &
+nohup ./run_KasuminonDAC_test.sh &
 ```
+---
 
 ## NOTES -- Changes made from original instructions
 - reordered channels in envs/crossmap.yaml
