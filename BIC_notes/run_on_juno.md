@@ -6,7 +6,6 @@
     export PATH=/opt/common/bic/miniconda3/bin:$PATH
     source activate /home/wilson/.conda/envs/snakemakev5 ## Manda already set up snakemake env successfully
     module load singularity/3.7.1
-    module load perl/perl-5.22.0  ## added 10/30/2023
 
     #conda deactivate
     ```
@@ -92,7 +91,7 @@ nohup ./run_KasuminonDAC_test.sh &
 ## NOTES -- Changes made from original instructions
 - reordered channels in envs/crossmap.yaml
 - replaced channel 'bioconda' with 'bioconda/label/cf201901' in envs/transdecoder.yaml
-- load perl prior to running (`module load perl/perl-5.22.0`)
+- ~~load perl prior to running (`module load perl/perl-5.22.0`)~~ added channel 'conda-forge' and dependency perl-5.22.0 in envs/transdecoder.yaml
 - added /work to singularity bind paths
 - put snakemake command in shell script: run.sh; variables will need to be configured in this script but then pipeline can be started and restarted as necessary with simple command `./run.sh`
-  
+- increased memory request for job var_germ_03_CNN2D_ScoreVariants 
