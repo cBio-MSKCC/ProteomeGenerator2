@@ -24,7 +24,7 @@ user_defined_workflow:  # Please specify which PG2 modules you wish to execute
   # Required inputs are either DNA sequencing (WGS/WES) .fastq or .bam files, or a pre-made variant call file (.vcf). 
   # Depending on input type, data pre-processing and/or variant calling should be enabled.
   genome_personalization_module: 
-    enable_genome_personalization_module: true  ##KRISTA - false in original
+    enable_genome_personalization_module: true
 
     data_is_matched_tumor_normal: false
     create_separate_tumor_normal_genomes: false
@@ -41,10 +41,10 @@ user_defined_workflow:  # Please specify which PG2 modules you wish to execute
       #somatic variant calling on unpaired samples is currently unsupported
     
       continuation:
-        just_ran_PG2_preprocessing: false # default: false ##KRISTA - TRUE in original
+        just_ran_PG2_preprocessing: false # default: false
         just_finished_variant_calling: false
     continuation:
-      just_created_custom_genome: false  # default: false  ##KRISTA - TRUE in original
+      just_created_custom_genome: false  # default: false
   RNA-seq_module:
 
     enable_RNA-seq_module: true # this module should be enabled whenever inputs include RNA-seq data, and disabled otherwise
@@ -56,7 +56,7 @@ user_defined_workflow:  # Please specify which PG2 modules you wish to execute
       retain_all_fully_covered_reference_transcripts: false # default: false
 
     gene_fusion_track:
-      assemble_gene_fusions_with_Arriba: true   ##KRISTA - BIC ran with false. not sure why yet.  
+      assemble_gene_fusions_with_Arriba: true  
 
   # Create a genome track that propagates gene subset(s) from the genome annotation GTF directly into protein prediction. Importantly, this is distinct from, and does not impact rules that depend on the GTF as input. 
   # If DNA (WGS/WES) inputs are provided, then genes are retrieved from the organism-specific GTF (as created by the genome personalization module).
