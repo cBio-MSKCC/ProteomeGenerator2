@@ -166,7 +166,7 @@ if is_whole_genome_or_exome:
         params: n="16", R="'span[hosts=1] rusage[mem=8]'", \
             o="out/logs/variant_calling/intervals/score_variants.out", eo="out/logs/variant_calling/intervals/score_variants.err", \
             J="score_variants"
-        singularity: "docker://broadinstitute/gatk:4.1.4.1"
+        singularity: "/lila/data/bicgrp/pipelines/pg2/sifs/gatk4.1.4.1.sif"
         shell: "gatk --java-options '-Xmx128g' CNNScoreVariants -R {STOCK_GENOME_FASTA} -V {input.vcf} -O {output}"
 
     rule var_germ_TMP_CNN2D_ScoreVariants:
@@ -175,7 +175,7 @@ if is_whole_genome_or_exome:
         params: n="16", R="'span[hosts=1] rusage[mem=8]'", \
             o="out/logs/variant_calling/intervals/score_variants.out", eo="out/logs/variant_calling/intervals/score_variants.err", \
             J="score_variants"
-        singularity: "docker://broadinstitute/gatk:4.1.4.1"
+        singularity: "/lila/data/bicgrp/pipelines/pg2/sifs/gatk4.1.4.1.sif"
         shell: "gatk --java-options '-Xmx128g' CNNScoreVariants -R {STOCK_GENOME_FASTA} -I {input.bam} -V {input.vcf} -O {output} --tensor-type read_tensor"
     rule var_germ_03_CNN2D_ScoreVariants:
         input: bam="out/{study_group}/variant_calling/{sample}.analysis_ready.bam",vcf="out/{study_group}/variant_calling/HTC-scattered/{sample}.HTC.{interval}.genotyped.vcf",interval_list="out/{study_group}/variant_calling/intervals/{interval}-scattered.interval_list"
@@ -183,7 +183,7 @@ if is_whole_genome_or_exome:
         params: n="1", mem_per_cpu="16", R="'span[hosts=1] rusage[mem=16]'", \
             o="out/logs/variant_calling/intervals/score_variants_{interval}.out", eo="out/logs/variant_calling/intervals/score_variants_{interval}.err", \
             J="score_variants_{interval}"
-        singularity: "docker://broadinstitute/gatk:4.1.4.1"
+        singularity: "/lila/data/bicgrp/pipelines/pg2/sifs/gatk4.1.4.1.sif"
         shell: "gatk --java-options '-Xmx8g' CNNScoreVariants -R {STOCK_GENOME_FASTA} -I {input.bam} -V {input.vcf} -O {output} -L {input.interval_list} --tensor-type read_tensor"
 
     rule var_germ_03_TMP_CNN1D_ScoreVariants:
@@ -192,7 +192,7 @@ if is_whole_genome_or_exome:
         params: n="1", mem_per_cpu="8", R="'span[hosts=1] rusage[mem=8]'", \
             o="out/logs/variant_calling/intervals/score_variants_{interval}.out", eo="out/logs/variant_calling/intervals/score_variants_{interval}.err", \
             J="score_variants_{interval}"
-        singularity: "docker://broadinstitute/gatk:4.1.4.1"
+        singularity: "/lila/data/bicgrp/pipelines/pg2/sifs/gatk4.1.4.1.sif"
         shell: "gatk --java-options '-Xmx8g' CNNScoreVariants -R {STOCK_GENOME_FASTA} -V {input.vcf} -O {output} -L {input.interval_list}"
 
     HAPMAP=config['parameters']['genome_personalization_module']['variant_calling']['resources']['germline']['snps_db']
@@ -205,7 +205,7 @@ if is_whole_genome_or_exome:
         params: n="1", mem_per_cpu="4", R="'span[hosts=1] rusage[mem=4]'", \
             o="out/logs/assign_tranches.out", eo="out/logs/assign_tranches.err", \
             J="assign_tranches"
-        singularity: "docker://broadinstitute/gatk:4.1.4.1"
+        singularity: "/lila/data/bicgrp/pipelines/pg2/sifs/gatk4.1.4.1.sif"
         shell: "gatk --java-options '-Xmx4g' FilterVariantTranches -V {input.vcf} --resource {HAPMAP} --resource {MILLS} --info-key CNN_2D --snp-tranche {SNP_TRANCHE} --indel-tranche {INDEL_TRANCHE} --invalidate-previous-filters -O {output} -L {input.interval_list}"
 
 else:
