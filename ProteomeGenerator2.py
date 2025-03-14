@@ -385,7 +385,7 @@ if RNA_seq_module_enabled:
 #TODO: function to create subsets of the genome GTF.
 if 'genome' in ALL_TRACKS:
     rule GTF_CreateGenomeAnnotationTrack:
-        input: gtf=os.path.abspath((create_custom_genome(PG2_GENOME_GTF) if creating_custom_genome else PG2_GENOME_GTF))
+        input: gtf=(create_custom_genome(PG2_GENOME_GTF) if creating_custom_genome else PG2_GENOME_GTF)
         output: "out/{study_group}/haplotype-{htype}/genome/genome.gtf"
         params: n="8", mem_per_cpu="4", R="'span[hosts=1]'", J="merge", o="out/logs/merge.out", eo="out/logs/merge.err"
         shell: "ln -s {input} {output}"
