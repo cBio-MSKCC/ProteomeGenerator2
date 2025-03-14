@@ -7,16 +7,16 @@ directories:
 
 stock_references:
   genome:
-    fasta: "/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/GRCh38.genome.fa"
-    gtf: "/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/gencode.v31.annotation.gtf"
+    fasta: "/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/GRCh38.genome.fa"
+    gtf: "/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/gencode.v31.annotation.gtf"
     optional_aligner_indices: # if left blank, these will be automatically generated as needed
       BWA:
         BWA_index_dir:
         BWA_prefix: 
       STAR_index_dir: 
   proteome: 
-    fasta: "/lila/data/bicgrp/pipelines/pg2/resources/UniProt/UP_sprot_human_canonical+isoforms+cRAP.fasta" 
-    second_fasta: "/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/gencode.v31.pc_translations.fa"
+    fasta: "/lila/data/bicgrp/kristakaz/pg2/resources/UniProt/UP_sprot_human_canonical+isoforms+cRAP.fasta" 
+    second_fasta: "/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/gencode.v31.pc_translations.fa"
 
 user_defined_workflow:  # Please specify which PG2 modules you wish to execute
 
@@ -24,7 +24,7 @@ user_defined_workflow:  # Please specify which PG2 modules you wish to execute
   # Required inputs are either DNA sequencing (WGS/WES) .fastq or .bam files, or a pre-made variant call file (.vcf). 
   # Depending on input type, data pre-processing and/or variant calling should be enabled.
   genome_personalization_module: 
-    enable_genome_personalization_module: true
+    enable_genome_personalization_module: true  ##KRISTA - false in original
 
     data_is_matched_tumor_normal: false
     create_separate_tumor_normal_genomes: false
@@ -41,10 +41,10 @@ user_defined_workflow:  # Please specify which PG2 modules you wish to execute
       #somatic variant calling on unpaired samples is currently unsupported
     
       continuation:
-        just_ran_PG2_preprocessing: false # default: false
+        just_ran_PG2_preprocessing: false # default: false ##KRISTA - TRUE in original
         just_finished_variant_calling: false
     continuation:
-      just_created_custom_genome: false  # default: false
+      just_created_custom_genome: false  # default: false  ##KRISTA - TRUE in original
   RNA-seq_module:
 
     enable_RNA-seq_module: true # this module should be enabled whenever inputs include RNA-seq data, and disabled otherwise
@@ -56,7 +56,7 @@ user_defined_workflow:  # Please specify which PG2 modules you wish to execute
       retain_all_fully_covered_reference_transcripts: false # default: false
 
     gene_fusion_track:
-      assemble_gene_fusions_with_Arriba: true  
+      assemble_gene_fusions_with_Arriba: true   ##KRISTA - BIC ran with false. not sure why yet.  
 
   # Create a genome track that propagates gene subset(s) from the genome annotation GTF directly into protein prediction. Importantly, this is distinct from, and does not impact rules that depend on the GTF as input. 
   # If DNA (WGS/WES) inputs are provided, then genes are retrieved from the organism-specific GTF (as created by the genome personalization module).
@@ -168,12 +168,12 @@ parameters:
         indel_tranche: 96.0 # default: 96.0
 
       resources: # if left as default, these GRCh38 resources are downloaded to corresponding locations on installation
-        wgs_calling_regions: '/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/wgs_calling_regions.hg38.interval_list'
+        wgs_calling_regions: '/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/wgs_calling_regions.hg38.interval_list'
         germline:
-          snps_db: '/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/GATK_resource_bundle/hapmap_3.3.hg38.vcf.gz'
-          indels_db: '/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/GATK_resource_bundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz'
+          snps_db: '/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/GATK_resource_bundle/hapmap_3.3.hg38.vcf.gz'
+          indels_db: '/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/GATK_resource_bundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz'
         somatic:
-          germline_population_db: '/lila/data/bicgrp/pipelines/pg2/resources/GRCh38/af-only-gnomad.hg38.vcf.gz'
+          germline_population_db: '/lila/data/bicgrp/kristakaz/pg2/resources/GRCh38/af-only-gnomad.hg38.vcf.gz'
     
   RNA-seq_module:
 

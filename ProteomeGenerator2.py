@@ -74,7 +74,7 @@ if RNA_seq_module_enabled:
         SAMPLE_DICT[('bam',exp_group)]=EXPERIMENT_SAMPLES
         SAMPLE_DICT[('bam',ctrl_group)]=CONTROL_SAMPLES
 
-    if 'fastq' in RNAseq_file_format:
+    if RNA_seq_module_enabled and 'fastq' in RNAseq_file_format:
         try: 
             FASTQ_SAMPLES = list(config['input_files']['RNA-seq_module']['fastq_inputs'].keys())
         except KeyError: 
@@ -203,7 +203,7 @@ rule RNA_00_STAR_CreateGenomeIndex:
             --genomeDir {params.directory} --sjdbGTFfile {input.gtf} --sjdbOverhang {SJ_OVERHANG} --genomeSuffixLengthMax 1000 \
             --genomeFastaFiles {input.fasta} 2> {log}"
 
-if 'bam' in RNAseq_file_format:
+if RNA_seq_module_enabled and 'bam' in RNAseq_file_format:
     rule RNA_00_ExtractFastqReadsFromRNAseqBAM:
         input: lambda wildcards: config['input_files']['RNA-seq_module']['bam_inputs'][wildcards.sample]['bam_file']
         output: read_one=temp("out/temp_inputs/{sample}.bam2fq.1.fq.gz"),read_two=temp("out/temp_inputs/{sample}.bam2fq.2.fq.gz")
@@ -211,7 +211,7 @@ if 'bam' in RNAseq_file_format:
         params: n="16", mem_per_cpu="6", R="'span[hosts=1] rusage[mem=6]'", J="RNAseq_bam2fq", o="out/logs/RNAseq/bam2fq.out", eo="out/logs/RNAseq/bam2fq.err",int_readOne=os.path.join(TMP,"{sample}.RG.bam2fq.1.fq"),int_readTwo=os.path.join(TMP,"{sample}.RG.bam2fq.2.fq")
         shell: "samtools collate -O -@ {params.n} {input} | samtools fastq -@ {params.n} -1 {params.int_readOne} -2 {params.int_readTwo} -; gzip -c {params.int_readOne} > {output.read_one}; gzip -c {params.int_readTwo} > {output.read_two}"
  
-if 'fastq' not in RNAseq_file_format:
+if RNA_seq_module_enabled and 'fastq' not in RNAseq_file_format:
     for group in STUDY_GROUPS:
         SAMPLE_DICT[('fastq',group)] = []
  
@@ -482,7 +482,7 @@ rule main_03_ORF_PredictCodingRegions:
         blastp="out/{study_group}/haplotype-{htype}/{track}/blastp.outfmt6"
     output: "out/{study_group}/haplotype-{htype}/{track}/transcripts.fasta.transdecoder.pep",checkpoint_dir=directory("out/{study_group}/haplotype-{htype}/{track}/transcripts.fasta.transdecoder_dir.__checkpoints/"),gff3="out/{study_group}/haplotype-{htype}/{track}/transcripts.fasta.transdecoder.gff3"
     conda: "envs/transdecoder.yaml"
-    params: n="1", mem_per_cpu="18", R="'rusage[mem=18]'", J="Predict", o="out/logs/Predict.out", eo="out/logs/Predict.err",single_best_only='--single_best_only' if retaining_single_best_only else ''
+    params: n="1", mem_per_cpu="120", R="'rusage[mem=120]'", J="Predict", o="out/logs/Predict.out", eo="out/logs/Predict.err",single_best_only='--single_best_only' if retaining_single_best_only else ''
     shell: "rm -r {output.checkpoint_dir};cd out/{wildcards.study_group}/haplotype-{wildcards.htype}/{wildcards.track}; {PG2_HOME}/utils/transdecoder/TransDecoder.Predict.PG2 \
         -t transcripts.fasta \
         --retain_long_orfs_length {nuc_ORF} \
@@ -498,7 +498,7 @@ rule main_04_GenerateCDSinGenomeCoords:
     output: "out/{study_group}/haplotype-{htype}/{track}/transcripts.genome.gff3"
     log: "out/logs/{study_group}/h-{htype}.{track}.cdna_alignment_orf_to_genome_orf.txt"
     conda: "envs/transdecoder.yaml"
-    params: n="1", mem_per_cpu="16", R="'rusage[mem=16]'", J="cdna_alignment_orf_to_genome_orf", o="out/logs/cdna_alignment_orf_to_genome_orf.out", eo="out/logs/cdna_alignment_orf_to_genome_orf.err"
+    params: n="1", mem_per_cpu="36", R="'rusage[mem=36]'", J="cdna_alignment_orf_to_genome_orf", o="out/logs/cdna_alignment_orf_to_genome_orf.out", eo="out/logs/cdna_alignment_orf_to_genome_orf.err"
     shell: "perl {PG2_HOME}/utils/transdecoder/util/cdna_alignment_orf_to_genome_orf.pl {input.gff3_td} {input.gff3} {input.fasta_td} > {output} 2> {log}"
 
 rule main_05_ReadOutProteomeFASTA:
@@ -506,7 +506,7 @@ rule main_05_ReadOutProteomeFASTA:
     output: "out/{study_group}/haplotype-{htype}/{track}/proteome.fasta"
     log: "out/logs/{study_group}/h-{htype}.{track}.gff3_file_to_proteins.txt"
     conda: "envs/transdecoder.yaml"
-    params: n="2", mem_per_cpu="8", R="'rusage[mem=8]'", J="gff3_file_to_proteins", o="out/logs/gff3_file_to_proteins.out", eo="out/logs/gff3_file_to_proteins.err"
+    params: n="2", mem_per_cpu="16", R="'rusage[mem=16]'", J="gff3_file_to_proteins", o="out/logs/gff3_file_to_proteins.out", eo="out/logs/gff3_file_to_proteins.err"
     shell: "cat {input.gff3} | grep -P \"\tCDS\t\" | gffread --force-exons - -o- | gff3_file_to_proteins.pl --gff3 /dev/stdin --fasta {input.ref_fasta} | egrep -o '^[^*]+' > {output} 2> {log}"
 
 """
